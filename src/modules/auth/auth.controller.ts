@@ -12,11 +12,11 @@ export class AuthController {
 	async getToken(@BodyParams() model: AuthSchema) {
 		const { username, password } = model;
 
-		const { email, id } = await this.service.authenticate(
+		const { email, id, role } = await this.service.authenticate(
 			username,
 			password
 		);
-		const token = this.service.generateToken({ id, email, username });
+		const token = this.service.generateToken({ id, email, username, role });
 
 		return { token };
 	}

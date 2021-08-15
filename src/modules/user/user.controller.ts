@@ -7,7 +7,7 @@ import {
 	UseBefore,
 } from "@tsed/common";
 import { Returns } from "@tsed/schema";
-import { isAuthorized } from "../auth/auth.middleware";
+import { AuthTokenMiddleware, IsAdmin } from "../auth/auth.middleware";
 import { UserCreateSchema, UserListSchema } from "./user.schema";
 import { UserService } from "./user.service";
 
@@ -22,13 +22,14 @@ export class UserController {
 	}
 
 	@Get("/:id")
-	@UseBefore(isAuthorized)
+	@UseBefore(AuthTokenMiddleware)
 	@Returns(200, UserListSchema)
 	getOne(@PathParams("id") id: string) {
 		return this.service.findOne(id);
 	}
 
 	@Get("/")
+	@UseBefore(AuthTokenMiddleware)
 	@(Returns(200, Array).Of(UserListSchema))
 	getAll() {
 		return this.service.findAll();

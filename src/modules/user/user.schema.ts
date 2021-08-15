@@ -18,6 +18,9 @@ export class UserSchema {
 export class UserListSchema extends UserSchema {
 	@Property()
 	id: string;
+
+	@Property()
+	role: string;
 }
 
 @Schema({ name: "userCreateSchema" })
