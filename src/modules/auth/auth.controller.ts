@@ -1,7 +1,6 @@
 import { BodyParams, Controller, Post } from "@tsed/common";
 import { Returns } from "@tsed/schema";
-import { AuthSchema } from "./auth.model";
-import { AuthTokenSchema } from "./auth.schema";
+import { AuthSchema, AuthTokenSchema } from "./auth.schema";
 import { AuthService } from "./auth.service";
 
 @Controller("/auth")

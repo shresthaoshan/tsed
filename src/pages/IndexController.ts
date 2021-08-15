@@ -1,5 +1,5 @@
 import { Controller, Get } from "@tsed/common";
-import { version } from "src/config";
+import { version, homepage } from "src/config";
 
 @Controller("/")
 export class IndexController {
@@ -7,6 +7,7 @@ export class IndexController {
 	get() {
 		return {
 			version: `v${version}`,
+			docs: homepage + "/api/docs",
 		};
 	}
 }

@@ -3,7 +3,7 @@ import { MongooseModel } from "@tsed/mongoose";
 import { verifyPassword } from "src/utils/password";
 import { getToken } from "src/utils/token";
 import { User } from "../user/user.model";
-import { UserListSchema } from "../user/user.schema";
+import { AuthError } from "./auth.error";
 
 @Injectable({
 	type: ProviderType.SERVICE,
@@ -15,10 +15,17 @@ export class AuthService {
 	async authenticate(username: string, password: string) {
 		const user = await this.userModel.findOne({ username });
 
-		if (!user) throw new Error("Cannot authenticate. User does not exist.");
+		if (!user)
+			throw new AuthError(
+				"Cannot authenticate. User does not exist.",
+				400
+			);
 
 		if (!verifyPassword(password, user.password))
-			throw new Error("Cannot authenticate. Credentials do not match.");
+			throw new AuthError(
+				"Cannot authenticate. Credentials do not match.",
+				401
+			);
 
 		return user;
 	}

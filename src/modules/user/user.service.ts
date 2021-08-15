@@ -3,6 +3,7 @@ import { MongooseModel } from "@tsed/mongoose";
 import { UserCreateSchema } from "./user.schema";
 import { hashPassword } from "src/utils/password";
 import { Inject, Injectable, ProviderScope, ProviderType } from "@tsed/di";
+import { UserError } from "./user.error";
 
 @Injectable({
 	type: ProviderType.SERVICE,
@@ -22,7 +23,9 @@ export class UserService {
 		return this.model.find({});
 	}
 
-	findOne(_id: string) {
-		return this.model.findById(_id);
+	async findOne(_id: string) {
+		const user = await this.model.findById(_id);
+		if (!user) throw new UserError(`User with id ${_id} not found.`, 404);
+		return user;
 	}
 }

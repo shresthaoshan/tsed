@@ -1,5 +1,13 @@
-import { BodyParams, Controller, Get, PathParams, Post } from "@tsed/common";
+import {
+	BodyParams,
+	Controller,
+	Get,
+	PathParams,
+	Post,
+	UseBefore,
+} from "@tsed/common";
 import { Returns } from "@tsed/schema";
+import { isAuthorized } from "../auth/auth.middleware";
 import { UserCreateSchema, UserListSchema } from "./user.schema";
 import { UserService } from "./user.service";
 
@@ -14,6 +22,7 @@ export class UserController {
 	}
 
 	@Get("/:id")
+	@UseBefore(isAuthorized)
 	@Returns(200, UserListSchema)
 	getOne(@PathParams("id") id: string) {
 		return this.service.findOne(id);

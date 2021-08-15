@@ -23,15 +23,9 @@ import { IndexController } from "./pages/IndexController";
 		"/": [IndexController],
 		"/api": [`${rootDir}/modules/**/*.controller.ts`],
 	},
-	swagger: [
-		{
-			path: "/api/v2/docs",
-			specVersion: "2.0",
-		},
-		{
-			path: "/api/docs",
-			specVersion: "3.0.1",
-		},
+	componentsScan: [
+		`${rootDir}/modules/**/*.service.ts`,
+		`${rootDir}/modules/**/*.middleware.ts`,
 	],
 	views: {
 		root: `${rootDir}/../views`,
